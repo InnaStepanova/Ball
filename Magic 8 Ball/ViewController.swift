@@ -12,9 +12,19 @@ class ViewController: UIViewController {
     
     let ballArray = [#imageLiteral(resourceName: "ball1.png"),#imageLiteral(resourceName: "ball2.png"),#imageLiteral(resourceName: "ball3.png"),#imageLiteral(resourceName: "ball4.png"),#imageLiteral(resourceName: "ball5.png")]
     
+    private lazy var stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .fillEqually
+        stack.spacing = 0
+        return stack
+    }()
+    
     private lazy var ballImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "ball1")
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
@@ -26,6 +36,10 @@ class ViewController: UIViewController {
         return label
     }()
     
+    private var buttonView: UIView = {
+        let view = UIView()
+        return view
+    }()
     private lazy var askButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Ask", for: .normal)
@@ -45,35 +59,37 @@ class ViewController: UIViewController {
     }
     @objc func askButtonPressed() {
         ballImage.image = ballArray.randomElement()
+        print("Tapped")
     }
 }
 
 extension ViewController {
     private func addViews() {
-        view.addSubview(ballImage)
-        view.addSubview(askButton)
-        view.addSubview(askMeLabel)
+        view.addSubview(stackView)
+        buttonView.addSubview(askButton)
+        stackView.addArrangedSubview(askMeLabel)
+        stackView.addArrangedSubview(ballImage)
+        stackView.addArrangedSubview(buttonView)
+        
     }
     
     private func layout() {
-        ballImage.translatesAutoresizingMaskIntoConstraints = false
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
         askButton.translatesAutoresizingMaskIntoConstraints = false
-        askMeLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            ballImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            ballImage.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-            ballImage.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -50),
-            ballImage.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 50),
+            stackView.topAnchor.constraint(equalTo: view.topAnchor, constant: 15),
+            stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15),
             
-            askMeLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 150),
-            askMeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            askButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            askButton.topAnchor.constraint(equalTo: ballImage.bottomAnchor, constant: 50),
+            askButton.centerXAnchor.constraint(equalTo: buttonView.centerXAnchor),
+            askButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
             askButton.heightAnchor.constraint(equalToConstant: 50),
             askButton.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
     
 }
+
