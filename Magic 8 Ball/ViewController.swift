@@ -84,6 +84,8 @@ extension ViewController {
             stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
             stackView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -15),
             
+            buttonView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor),
+            
             askButton.centerXAnchor.constraint(equalTo: buttonView.centerXAnchor),
             askButton.centerYAnchor.constraint(equalTo: buttonView.centerYAnchor),
             askButton.heightAnchor.constraint(equalToConstant: 50),
