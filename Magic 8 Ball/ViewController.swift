@@ -90,6 +90,5 @@ extension ViewController {
             askButton.widthAnchor.constraint(equalToConstant: 100)
         ])
     }
-    
 }
 
